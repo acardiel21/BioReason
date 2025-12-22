@@ -11,16 +11,9 @@
 
 <br>
 
-## Updates [October 27, 2025]
-- We are integrating vLLM to improve the speed and efficiency of the GRPO pipeline. We expect this to be pushed by end of week.
-- Checkpoints along with the custom DNA-LLM model class will be released on HuggingFace by end of week.
-- More training results with GRPO will be shared soon.
-
-<br>
-
 ## Abstract
 
-Unlocking deep, interpretable biological reasoning from complex genomic data is a major AI challenge hindering scientific discovery. Current DNA foundation models, despite strong sequence representation, struggle with multi-step reasoning and lack inherent transparent, biologically intuitive explanations. We introduce BioReason, a pioneering architecture that, for the first time, deeply integrates a DNA foundation model with a large language model (LLM). This novel connection enables the LLM to directly process and reason with genomic information as a fundamental input, fostering a new form of multimodal biological understanding. BioReason's sophisticated multi-step reasoning is developed through supervised fine-tuning and targeted reinforcement learning, guiding the system to generate logical, biologically coherent deductions. On biological reasoning benchmarks including KEGG-based disease pathway prediction—where accuracy improves from 88% to 97%—and variant effect prediction, BioReason demonstrates an average 15% performance gain over strong single-modality baselines.
+Unlocking deep, interpretable biological reasoning from complex genomic data is a major AI challenge hindering scientific discovery. Current DNA foundation models, despite strong sequence representation, struggle with multi-step reasoning and lack inherent transparent, biologically intuitive explanations. We introduce BIOREASON, a pioneering architecture that, for the first time, deeply integrates a DNA foundation model with a large language model (LLM). This novel connection enables the LLM to directly process and reason with genomic information as a fundamental input, fostering a new form of multimodal biological understanding. BIOREASON's sophisticated multi-step reasoning is developed through supervised fine-tuning and targeted reinforcement learning, guiding the system to generate logical, biologically coherent deductions. Across biological reasoning benchmarks, BIOREASON significantly improves performance, raising accuracy on KEGG-based disease pathway prediction from 86% to 98% and delivering an average 15% gain over strong single-modality baselines in variant effect prediction tasks. BIOREASON reasons over unseen biological entities and articulates decision-making through interpretable, step-by-step biological traces, offering a transformative approach for AI in biology that enables deeper mechanistic insights and accelerates testable hypothesis generation from genomic data. Data, code, and checkpoints are publicly available at https://github.com/bowang-lab/BioReason
 
 <br>
 
@@ -72,18 +65,21 @@ pip install -e .
 
 ### KEGG-Derived Biological Reasoning Task
 Performance comparison on 290 test datapoints for multi-step mechanistic reasoning:
-
 | Model | Accuracy | F1-Score | Precision | Recall |
 |-------|----------|----------|-----------|---------|
 | [DNA] NT - 500M | 86.55 | 69.76 | 73.23 | 66.61 |
 | [DNA] Evo2 - 1B | 88.28 | 72.43 | 75.23 | 69.83 |
 | [LLM] Qwen3 - 1B | 85.17 | 65.71 | 71.39 | 64.19 |
-| [LLM] Qwen3 - 4B | 93.48 | 85.44 | 88.31 | 86.72 |
-| [DNA-LLM] NT + Qwen3 - 1B | 88.42 | 72.13 | 75.42 | 71.91 |
-| [DNA-LLM] NT + Qwen3 - 1B (+RL) | 89.66 | 74.11 | 78.82 | 72.96 |
-| [DNA-LLM] NT + Qwen3 - 4B | 96.90 | **89.03** | **90.99** | **89.38** |
+| [LLM] Qwen3 - 4B | 90.00 | 79.66 | 88.24 | 75.08 |
+| [DNA-LLM] NT + Qwen3 - 1B | 89.31 | 81.46 | 88.24 | 77.30 |
+| [DNA-LLM] NT + Qwen3 - 1B (+GRPO) | 91.72 | 75.06 | 79.41 | 72.89 |
+| [DNA-LLM] NT + Qwen3 - 4B | 95.86 | 86.25 | 88.24 | 84.95 |
+| [DNA-LLM] NT + Qwen3 - 4B (+GRPO) | **98.28** | 90.15 | 91.18 | 89.62 |
 | [DNA-LLM] Evo2 + Qwen3 - 1B | 90.42 | 75.62 | 77.42 | 73.91 |
-| [DNA-LLM] Evo2 + Qwen3 - 4B | **97.24** | 86.30 | 86.75 | 87.25 |
+| [DNA-LLM] Evo2 + Qwen3 - 4B | 95.17 | 86.14 | 91.18 | 83.33 |
+| [DNA-LLM] Evo2 + Qwen3 - 4B (+GRPO) | **98.28** | **93.05** | **94.12** | **92.48** |
+
+<br>
 
 ### Variant Effect Prediction Benchmarks
 Performance on pathogenic/benign classification:
