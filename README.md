@@ -11,6 +11,15 @@
 
 <br>
 
+> [!NOTE]
+> **BioReason-Pro is now released!**
+> 
+> Building on this work, BioReason-Pro integrates ESM3 embeddings, GO-GPT, and reinforcement learning to generate expert-level protein function annotations, preferred over UniProt entries 79% of the time.
+> 
+> [![Paper](https://img.shields.io/badge/bioRxiv-2026.03.19.712954-FF6B6B?style=flat-square&logo=arxiv&logoColor=white)](https://www.biorxiv.org/content/10.64898/2026.03.19.712954v1) [![Code](https://img.shields.io/badge/GitHub-Code-4A90E2?style=flat-square&logo=github&logoColor=white)](https://github.com/bowang-lab/BioReason-Pro) [![Web Server](https://img.shields.io/badge/Try_It-bioreason.net-00B89E?style=flat-square&logo=internet-explorer&logoColor=white)](https://bioreason.net) [![Models](https://img.shields.io/badge/HuggingFace-Models_&_Data-FFBF00?style=flat-square&logo=huggingface&logoColor=white)](https://huggingface.co/collections/wanglab/bioreason-pro)
+
+<br>
+
 ## Abstract
 
 Unlocking deep, interpretable biological reasoning from complex genomic data is a major AI challenge hindering scientific discovery. Current DNA foundation models, despite strong sequence representation, struggle with multi-step reasoning and lack inherent transparent, biologically intuitive explanations. We introduce BIOREASON, a pioneering architecture that, for the first time, deeply integrates a DNA foundation model with a large language model (LLM). This novel connection enables the LLM to directly process and reason with genomic information as a fundamental input, fostering a new form of multimodal biological understanding. BIOREASON's sophisticated multi-step reasoning is developed through supervised fine-tuning and targeted reinforcement learning, guiding the system to generate logical, biologically coherent deductions. Across biological reasoning benchmarks, BIOREASON significantly improves performance, raising accuracy on KEGG-based disease pathway prediction from 86% to 98% and delivering an average 15% gain over strong single-modality baselines in variant effect prediction tasks. BIOREASON reasons over unseen biological entities and articulates decision-making through interpretable, step-by-step biological traces, offering a transformative approach for AI in biology that enables deeper mechanistic insights and accelerates testable hypothesis generation from genomic data. Data, code, and checkpoints are publicly available at https://github.com/bowang-lab/BioReason
@@ -111,6 +120,18 @@ If you find this work useful, please cite our paper:
       archivePrefix={arXiv},
       primaryClass={cs.LG},
       url={https://arxiv.org/abs/2505.23579}, 
+}
+
+@article {Fallahpour2026.03.19.712954,
+	author = {Fallahpour, Adibvafa and Seyed-Ahmadi, Arman and Idehpour, Parsa and Ibrahim, Omar and Gupta, Purav and Naimer, Jack and Zhu, Kevin and Shah, Arnav and Ma, Shihao and Adduri, Abhinav and G{\"u}loglu, Talu and Liu, Nuo and Cui, Haotian and Jain, Arihant and de Castro, Max and Fallahpour, Amirfaham and Cembellin-Prieto, Antonio and Stiles, John S. and Nem{\v c}ko, Filip and Nevue, Alexander A. and Moon, Hyungseok C. and Sosnick, Lucas and Markham, Olivia and Duan, Haonan and Lee, Michelle Y. Y. and Salvador, Andrea F. M. and Maddison, Chris J. and Thaiss, Christoph A. and Ricci-Tam, Chiara and Plosky, Brian S. and Burke, Dave P. and Hsu, Patrick D. and Goodarzi, Hani and Wang, Bo},
+	title = {BioReason-Pro: Advancing Protein Function Prediction with Multimodal Biological Reasoning},
+	elocation-id = {2026.03.19.712954},
+	year = {2026},
+	doi = {10.64898/2026.03.19.712954},
+	publisher = {Cold Spring Harbor Laboratory},
+	URL = {https://www.biorxiv.org/content/early/2026/03/20/2026.03.19.712954},
+	eprint = {https://www.biorxiv.org/content/early/2026/03/20/2026.03.19.712954.full.pdf},
+	journal = {bioRxiv}
 }
 ```
 
