@@ -2,8 +2,9 @@
 #BSUB -J bioreason_vep_nt
 #BSUB -q gpu
 #BSUB -n 6
-#BSUB -R "rusage[ngpus_excl_p=1,mem=21000]"
+#BSUB -R "rusage[mem=21000]"
 #BSUB -R "select[gpu_model0=TeslaA100]"
+#BSUB -gpu "num=1:mode=exclusive_process:mps=no"
 #BSUB -P acc_genome_foundation
 #BSUB -W 12:00
 #BSUB -o /sc/arion/work/cardia04/BioReason/logs/vep_nt_%J.out
