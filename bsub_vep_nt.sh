@@ -40,6 +40,7 @@ echo "========================================================"
 stdbuf -oL -eL python train_dna_only.py \
     --cache_dir ${HF_HOME} \
     --wandb_project ${WANDB_PROJECT} \
+    --wandb_entity andrea-cardiel-icahn \
     --dna_model_name InstaDeepAI/nucleotide-transformer-v2-500m-multi-species \
     --strategy ddp \
     --max_epochs 3 \
@@ -61,6 +62,7 @@ echo "========================================================"
 stdbuf -oL -eL python train_dna_only.py \
     --cache_dir ${HF_HOME} \
     --wandb_project ${WANDB_PROJECT} \
+    --wandb_entity andrea-cardiel-icahn \
     --dna_model_name InstaDeepAI/nucleotide-transformer-v2-500m-multi-species \
     --strategy ddp \
     --max_epochs 3 \
