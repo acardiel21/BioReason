@@ -4,6 +4,7 @@
 #BSUB -n 6
 #BSUB -R "rusage[ngpus_excl_p=1,mem=21000]"
 #BSUB -R "select[gpu_model0=TeslaA100]"
+#BSUB -P acc_genome_foundation
 #BSUB -W 12:00
 #BSUB -o /sc/arion/work/cardia04/BioReason/logs/vep_nt_%J.out
 #BSUB -e /sc/arion/work/cardia04/BioReason/logs/vep_nt_%J.err
