@@ -1,18 +1,18 @@
 #!/bin/bash
 #BSUB -J bioreason_vep_nt
+#BSUB -P acc_genome_foundation
 #BSUB -q gpu
 #BSUB -n 6
 #BSUB -R "rusage[mem=21000]"
-#BSUB -R "select[gpu_model0==NVIDIAA100_SXM4]"
 #BSUB -gpu "num=1:mode=exclusive_process:mps=no"
-#BSUB -P acc_genome_foundation
 #BSUB -W 12:00
 #BSUB -o /sc/arion/work/cardia04/BioReason/logs/vep_nt_%J.out
-#BSUB -e /sc/arion/work/cardia04/BioReason/logs/vep_nt_%J.err
+#BSUB -eo /sc/arion/work/cardia04/BioReason/logs/vep_nt_%J.err
+#BSUB -L /bin/bash
 
 ## -n 6           : 6 CPU slots
 ## mem=21000      : 21 GB/slot × 6 = ~126 GB total RAM
-## ngpus_excl_p=1 : 1 exclusive GPU
+## num=1          : 1 exclusive GPU
 ## W 12:00        : 12-hour wall time (two sequential 3-epoch runs)
 
 # ---------------------------------------------------------------------------
