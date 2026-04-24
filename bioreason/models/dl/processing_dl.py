@@ -3,11 +3,20 @@ from typing import List, Optional, Union, Dict, Any, Tuple
 import torch
 
 from transformers.processing_utils import (
-    CommonKwargs,
     ProcessingKwargs,
     ProcessorMixin,
-    Unpack,
 )
+try:
+    from transformers.processing_utils import CommonKwargs, Unpack
+except ImportError:
+    from typing import TypedDict
+    try:
+        from typing import Unpack
+    except ImportError:
+        from typing_extensions import Unpack
+
+    class CommonKwargs(TypedDict, total=False):
+        pass
 from transformers.feature_extraction_utils import BatchFeature
 from transformers.tokenization_utils_base import PreTokenizedInput, TextInput
 
