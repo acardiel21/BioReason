@@ -222,7 +222,7 @@ class DNALLMModel(nn.Module):
         projected_states = self.dna_projection(hidden_states)
 
         # Group embeddings by batch item
-        result = [[] for _ in range(2 * batch_size)]
+        result = [[] for _ in range(batch_size)]
 
         # For each sequence, get its embeddings and add to appropriate batch result
         for seq_idx, batch_idx in enumerate(batch_idx_map):

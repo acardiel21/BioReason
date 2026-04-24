@@ -39,7 +39,7 @@ def sync_fsdp1_params_to_vllm(accelerator, vllm_mode: str, vllm_client: VLLMClie
     for child_name, child_module in module.named_children():
         child_prefix = f"{prefix}.{child_name}" if prefix else child_name
         sync_fsdp1_params_to_vllm(
-            child_module, prefix=child_prefix, visited=visited
+            accelerator, vllm_mode, vllm_client, llm, child_module, prefix=child_prefix, visited=visited
         )  # recurse into the child
 
     if isinstance(module, FSDP):

@@ -11,3 +11,5 @@ wandb
 trl[vllm]
 bitsandbytes
 deepspeed
+safetensors
+pandas

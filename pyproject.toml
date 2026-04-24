@@ -28,6 +28,8 @@ dependencies = [
     "trl[vllm]",
     "bitsandbytes",
     "deepspeed",
+    "safetensors",
+    "pandas",
 ]
 
 [project.optional-dependencies]
