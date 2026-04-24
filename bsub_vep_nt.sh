@@ -25,6 +25,9 @@ conda activate bioreview
 cd /sc/arion/work/cardia04/BioReason
 
 export HF_HOME=/sc/arion/work/cardia04/.cache/huggingface
+export HUGGINGFACE_HUB_CACHE=/sc/arion/work/cardia04/.cache/huggingface
+export TRANSFORMERS_OFFLINE=1
+export HF_DATASETS_OFFLINE=1
 export TOKENIZERS_PARALLELISM=false
 export WANDB_PROJECT=bioreason
 
