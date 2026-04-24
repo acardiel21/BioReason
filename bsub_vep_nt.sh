@@ -3,7 +3,7 @@
 #BSUB -q gpu
 #BSUB -n 6
 #BSUB -R "rusage[mem=21000]"
-#BSUB -R "select[gpu_model0=TeslaA100]"
+#BSUB -R "select[gpu_model0==NVIDIAA100_SXM4]"
 #BSUB -gpu "num=1:mode=exclusive_process:mps=no"
 #BSUB -P acc_genome_foundation
 #BSUB -W 12:00
@@ -18,6 +18,7 @@
 # ---------------------------------------------------------------------------
 # Environment
 # ---------------------------------------------------------------------------
+module load gcc/14.2.0
 source /hpc/users/cardia04/miniconda3/etc/profile.d/conda.sh
 conda activate bioreview
 
