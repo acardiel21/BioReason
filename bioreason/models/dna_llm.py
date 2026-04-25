@@ -232,7 +232,7 @@ class DNALLMModel(nn.Module):
             result[batch_idx].append(seq_embedding)
 
         # Concatenate embeddings for each batch item
-        for i in range(2 * batch_size):
+        for i in range(batch_size):
             if result[i]:
                 result[i] = torch.cat(result[i], dim=0)
             else:
