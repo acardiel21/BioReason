@@ -4,7 +4,7 @@
 #BSUB -q gpu
 #BSUB -n 8
 #BSUB -R "rusage[mem=24000]"
-#BSUB -gpu "num=1:mode=exclusive_process:mps=no"
+#BSUB -gpu "num=1:mode=exclusive_process:mps=no:gmodel=NVIDIAH10080GBH"
 #BSUB -W 24:00
 #BSUB -o /sc/arion/work/cardia04/BioReason/logs/vep_qwen_%J.out
 #BSUB -eo /sc/arion/work/cardia04/BioReason/logs/vep_qwen_%J.err
