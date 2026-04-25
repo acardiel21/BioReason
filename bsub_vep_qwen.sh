@@ -1,5 +1,5 @@
 #!/bin/bash
-#BSUB -J bioreason_vep_qwen
+#BSUB -J bioreason_vep_qwen4b
 #BSUB -P acc_genome_foundation
 #BSUB -q gpu
 #BSUB -n 8
@@ -12,7 +12,7 @@
 
 ## -n 8           : 8 CPU slots (more workers needed for text tokenization)
 ## mem=24000      : 24 GB/slot × 8 = ~192 GB total RAM
-##                  (Qwen3-1.7B ~7GB + NT-500M ~2GB + activations + LoRA)
+##                  (Qwen3-4B ~8GB + NT-500M ~2GB + activations + LoRA)
 ## num=1          : 1 exclusive GPU (A100 40GB)
 ## W 24:00        : 24-hour wall time (two runs, each ~8-10h with batch_size=1)
 
@@ -39,14 +39,14 @@ nvidia-smi
 # Run 1: VEP Coding  (DNA + Qwen3-1.7B reasoning)
 # ---------------------------------------------------------------------------
 echo "========================================================"
-echo "Starting VEP Coding (NT-500M + Qwen3-1.7B)"
+echo "Starting VEP Coding (NT-500M + Qwen3-4B)"
 echo "========================================================"
 
 stdbuf -oL -eL python train_dna_qwen.py \
     --cache_dir ${HF_HOME} \
     --wandb_project ${WANDB_PROJECT} \
     --wandb_entity andrea-cardiel-icahn \
-    --text_model_name Qwen/Qwen3-1.7B \
+    --text_model_name Qwen/Qwen3-4B \
     --dna_model_name InstaDeepAI/nucleotide-transformer-v2-500m-multi-species \
     --strategy ddp \
     --max_epochs 3 \
@@ -68,14 +68,14 @@ stdbuf -oL -eL python train_dna_qwen.py \
 # Run 2: VEP Non-SNV  (DNA + Qwen3-1.7B reasoning)
 # ---------------------------------------------------------------------------
 echo "========================================================"
-echo "Starting VEP Non-SNV (NT-500M + Qwen3-1.7B)"
+echo "Starting VEP Non-SNV (NT-500M + Qwen3-4B)"
 echo "========================================================"
 
 stdbuf -oL -eL python train_dna_qwen.py \
     --cache_dir ${HF_HOME} \
     --wandb_project ${WANDB_PROJECT} \
     --wandb_entity andrea-cardiel-icahn \
-    --text_model_name Qwen/Qwen3-1.7B \
+    --text_model_name Qwen/Qwen3-4B \
     --dna_model_name InstaDeepAI/nucleotide-transformer-v2-500m-multi-species \
     --strategy ddp \
     --max_epochs 3 \
