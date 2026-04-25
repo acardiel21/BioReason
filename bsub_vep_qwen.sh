@@ -54,7 +54,8 @@ stdbuf -oL -eL python train_dna_qwen.py \
     --num_gpus 1 \
     --batch_size 2 \
     --model_type dna-llm \
-    --dataset_type variant_effect_coding
+    --dataset_type variant_effect_coding \
+    --return_answer_in_batch True
 
 # ---------------------------------------------------------------------------
 # Run 2: VEP Non-SNV  (DNA + Qwen3-4B reasoning)
@@ -74,7 +75,8 @@ stdbuf -oL -eL python train_dna_qwen.py \
     --num_gpus 1 \
     --batch_size 2 \
     --model_type dna-llm \
-    --dataset_type variant_effect_non_snv
+    --dataset_type variant_effect_non_snv \
+    --return_answer_in_batch True
 
 echo "========================================================"
 echo "Both VEP Qwen runs complete."
