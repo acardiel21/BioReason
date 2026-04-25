@@ -48,20 +48,11 @@ stdbuf -oL -eL python train_dna_qwen.py \
     --wandb_entity andrea-cardiel-icahn \
     --text_model_name Qwen/Qwen3-4B \
     --dna_model_name InstaDeepAI/nucleotide-transformer-v2-500m-multi-species \
-    --strategy ddp \
+    --strategy deepspeed_stage_2 \
     --max_epochs 3 \
     --num_gpus 1 \
-    --batch_size 1 \
-    --gradient_accumulation_steps 8 \
-    --max_length_dna 2048 \
-    --max_length_text 1024 \
-    --truncate_dna_per_side 1024 \
-    --lora_rank 32 \
-    --lora_alpha 64 \
-    --lora_dropout 0.05 \
-    --text_model_finetune True \
-    --dna_model_finetune False \
-    --learning_rate 5e-5 \
+    --batch_size 2 \
+    --model_type dna-llm \
     --dataset_type variant_effect_coding
 
 # ---------------------------------------------------------------------------
@@ -77,20 +68,11 @@ stdbuf -oL -eL python train_dna_qwen.py \
     --wandb_entity andrea-cardiel-icahn \
     --text_model_name Qwen/Qwen3-4B \
     --dna_model_name InstaDeepAI/nucleotide-transformer-v2-500m-multi-species \
-    --strategy ddp \
-    --max_epochs 3 \
+    --strategy deepspeed_stage_2 \
+    --max_epochs 1 \
     --num_gpus 1 \
-    --batch_size 1 \
-    --gradient_accumulation_steps 8 \
-    --max_length_dna 2048 \
-    --max_length_text 1024 \
-    --truncate_dna_per_side 1024 \
-    --lora_rank 32 \
-    --lora_alpha 64 \
-    --lora_dropout 0.05 \
-    --text_model_finetune True \
-    --dna_model_finetune False \
-    --learning_rate 5e-5 \
+    --batch_size 2 \
+    --model_type dna-llm \
     --dataset_type variant_effect_non_snv
 
 echo "========================================================"
