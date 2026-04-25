@@ -4,6 +4,7 @@
 #BSUB -q gpu
 #BSUB -n 16
 #BSUB -R "rusage[mem=20000]"
+#BSUB -R a100
 #BSUB -gpu "num=2:mode=exclusive_process:mps=no"
 #BSUB -W 24:00
 #BSUB -o /sc/arion/work/cardia04/BioReason/logs/kegg_grpo_%J.out
@@ -53,8 +54,8 @@ export NCCL_P2P_DISABLE=1
 export NCCL_IB_DISABLE=1
 export NCCL_CUMEM_ENABLE=0
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True,max_split_size_mb:512
-
-MASTER_PORT=$((12000 + LSB_JOBID % 20000))
+export MASTER_ADDR=127.0.0.1
+export MASTER_PORT=$((12000 + LSB_JOBID % 20000))
 
 nvidia-smi
 
