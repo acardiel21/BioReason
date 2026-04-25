@@ -20,6 +20,7 @@
 # Environment
 # ---------------------------------------------------------------------------
 module load gcc/14.2.0
+module load cuda/13.0.0
 source /hpc/users/cardia04/miniconda3/etc/profile.d/conda.sh
 conda activate bioreview
 
