@@ -2,8 +2,8 @@
 #BSUB -J bioreason_vep_qwen4b
 #BSUB -P acc_genome_foundation
 #BSUB -q gpu
-#BSUB -n 4
-#BSUB -R "rusage[mem=48000] span[hosts=1]"
+#BSUB -n 2
+#BSUB -R "rusage[mem=96000] span[hosts=1]"
 #BSUB -gpu "num=1:mode=exclusive_process:mps=no:gmodel=NVIDIAH10080GBH"
 #BSUB -W 24:00
 #BSUB -o /sc/arion/work/cardia04/BioReason/logs/vep_qwen_%J.out
