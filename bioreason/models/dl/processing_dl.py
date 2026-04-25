@@ -166,11 +166,18 @@ class DLProcessor(ProcessorMixin):
         Returns:
             BatchFeature with tokenized inputs for the model
         """
-        output_kwargs = self._merge_kwargs(
-            DLProcessorKwargs,
-            tokenizer_init_kwargs=self.tokenizer.init_kwargs,
-            **kwargs,
-        )
+        try:
+            output_kwargs = self._merge_kwargs(
+                DLProcessorKwargs,
+                tokenizer_init_kwargs=getattr(self.tokenizer, "init_kwargs", {}),
+                **kwargs,
+            )
+        except (KeyError, TypeError):
+            # transformers 5.4.0 _merge_kwargs validates all TypedDict keys exist
+            # in output_kwargs; dna_kwargs is never populated via **kwargs so it
+            # raises KeyError: 'dna_kwargs'. Fall back to empty dicts — only
+            # text_kwargs is read from output_kwargs below.
+            output_kwargs = {"text_kwargs": {}, "dna_kwargs": {}}
 
         # Ensure text is a list
         if not isinstance(text, list):
