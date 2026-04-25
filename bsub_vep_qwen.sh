@@ -65,7 +65,7 @@ stdbuf -oL -eL python train_dna_qwen.py \
     --dataset_type variant_effect_coding
 
 # ---------------------------------------------------------------------------
-# Run 2: VEP Non-SNV  (DNA + Qwen3-1.7B reasoning)
+# Run 2: VEP Non-SNV  (DNA + Qwen3-4B reasoning)
 # ---------------------------------------------------------------------------
 echo "========================================================"
 echo "Starting VEP Non-SNV (NT-500M + Qwen3-4B)"
