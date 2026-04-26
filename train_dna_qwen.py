@@ -899,7 +899,7 @@ def main(args: ArgumentParser):
         ModelCheckpoint(
             dirpath=args.checkpoint_dir,
             filename=f"{run_name}-" + "{epoch:02d}-{val_loss_epoch:.4f}",
-            save_top_k=2,
+            save_top_k=1,
             monitor="val_loss_epoch",
             mode="min",
             save_last=True,
