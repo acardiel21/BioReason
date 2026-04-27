@@ -5,7 +5,7 @@
 #BSUB -q gpu
 #BSUB -n 8
 #BSUB -R "rusage[mem=16000] span[hosts=1]"
-#BSUB -gpu "num=1:mode=exclusive_process:mps=no:gmem=40G"
+#BSUB -gpu "num=1:mode=exclusive_process:mps=no:gmem=48G"
 #BSUB -o /sc/arion/work/cardia04/BioReason/logs/kegg_train_single_%J.out
 #BSUB -eo /sc/arion/work/cardia04/BioReason/logs/kegg_train_single_%J.err
 #BSUB -L /bin/bash
