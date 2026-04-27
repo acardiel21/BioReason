@@ -238,7 +238,7 @@ class DNALLMFineTuner(pl.LightningModule):
                             # For generation we need all sequences mapped to index 0
                             example_batch_map = [0] * len(example_indices)
 
-                    # Generate text
+                    # Generate text — skip gracefully if logits are unstable early in training
                     try:
                         with torch.no_grad():
                             generated = self.model.generate(
@@ -254,51 +254,47 @@ class DNALLMFineTuner(pl.LightningModule):
                             )
                         user_input = self.tokenizer.decode(gen_input_ids[0], skip_special_tokens=False).strip()
                         generation = self.tokenizer.decode(generated[0], skip_special_tokens=False).strip()
+
+                        # Free memory early
+                        del generated, gen_input_ids, gen_attention_mask, example_dna_data, example_batch_map
+                        gc.collect()
+
+                        print(f"=====[Sample {prefix} {batch_idx}]=====")
+                        print(f"=====[User input]=====\n{user_input}")
+                        print(f"=====[Complete generation]=====\n{generation}")
+
+                        # Get ground truth if available
+                        ground_truth = ""
+                        if labels is not None:
+                            valid_label_pos = (labels[example_idx] != -100).nonzero(as_tuple=True)[0]
+                            if len(valid_label_pos) > 0:
+                                if valid_label_pos[0] >= assistant_pos + marker_len:
+                                    ground_truth = self.tokenizer.decode(
+                                        input_ids[example_idx, valid_label_pos], skip_special_tokens=False
+                                    ).strip()
+                                    print(f"=====[Ground truth]=====\n{ground_truth}")
+
+                        # Log to wandb
+                        timestamp = time.time()
+                        step_id = f"gen_{self.global_step}-{timestamp}"
+                        wandb_logger = self.logger.experiment
+                        wandb_logger.log(
+                            {
+                                step_id: wandb.Table(
+                                    columns=["timestamp", "prefix", "batch_idx", "user_input", "generation", "ground_truth"],
+                                    data=[[timestamp, prefix, batch_idx, user_input, generation, ground_truth]],
+                                )
+                            }
+                        )
+
+                        # Clean up memory
+                        del user_input, generation, ground_truth
+                        torch.cuda.empty_cache()
+                        gc.collect()
+
                     except Exception as e:
                         print(f"[generate skipped: {e}]")
-                        del gen_input_ids, gen_attention_mask, example_dna_data, example_batch_map
                         gc.collect()
-                        continue
-
-                    # Free memory early
-                    del generated, gen_input_ids, gen_attention_mask, example_dna_data, example_batch_map
-                    gc.collect()
-
-                    print(f"=====[Sample {prefix} {batch_idx}]=====")
-                    print(f"=====[User input]=====\n{user_input}")
-                    print(f"=====[Complete generation]=====\n{generation}")
-
-                    # Get ground truth if available
-                    ground_truth = ""
-                    if labels is not None:
-                        # Find all positions where we have valid labels (not -100)
-                        valid_label_pos = (labels[example_idx] != -100).nonzero(as_tuple=True)[0]
-
-                        if len(valid_label_pos) > 0:
-                            # Check if valid labels start after assistant marker
-                            if valid_label_pos[0] >= assistant_pos + marker_len:
-                                ground_truth = self.tokenizer.decode(
-                                    input_ids[example_idx, valid_label_pos], skip_special_tokens=False
-                                ).strip()
-                                print(f"=====[Ground truth]=====\n{ground_truth}")
-
-                    # Log to wandb
-                    timestamp = time.time()
-                    step_id = f"gen_{self.global_step}-{timestamp}"
-                    wandb_logger = self.logger.experiment
-                    wandb_logger.log(
-                        {
-                            step_id: wandb.Table(
-                                columns=["timestamp", "prefix", "batch_idx", "user_input", "generation", "ground_truth"],
-                                data=[[timestamp, prefix, batch_idx, user_input, generation, ground_truth]],
-                            )
-                        }
-                    )
-
-                    # Clean up memory
-                    del user_input, generation, ground_truth
-                    torch.cuda.empty_cache()
-                    gc.collect()
 
                 else:
                     print("No assistant marker found in the input sequence")
