@@ -902,7 +902,7 @@ def main(args: ArgumentParser):
             save_top_k=1,
             monitor="val_loss_epoch",
             mode="min",
-            save_last=True,
+            save_last=False,
         ),
         LearningRateMonitor(logging_interval="step"),
     ]
