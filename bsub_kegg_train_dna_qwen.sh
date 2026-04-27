@@ -1,10 +1,10 @@
 #!/bin/bash
-#BSUB -J bioreason_kegg_train_dna_qwen # name of job
-#BSUB -W 12:00 # time limit
-#BSUB -P acc_genome_foundation # project 
-#BSUB -q gpu # partition 
-#BSUB -n 8 # number of cores
-#BSUB -R "rusage[mem=16000] span[hosts=1]" # memory limit
+#BSUB -J bioreason_kegg_train_dna_qwen
+#BSUB -W 12:00
+#BSUB -P acc_genome_foundation
+#BSUB -q gpu
+#BSUB -n 8
+#BSUB -R "rusage[mem=16000] span[hosts=1]"
 #BSUB -gpu "num=1:mode=exclusive_process:mps=no:gmem=40G"
 #BSUB -o /sc/arion/work/cardia04/BioReason/logs/train_dna_qwen_%J.out
 #BSUB -eo /sc/arion/work/cardia04/BioReason/logs/train_dna_qwen_%J.err
