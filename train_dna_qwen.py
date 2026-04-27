@@ -239,22 +239,26 @@ class DNALLMFineTuner(pl.LightningModule):
                             example_batch_map = [0] * len(example_indices)
 
                     # Generate text
-                    with torch.no_grad():
-                        generated = self.model.generate(
-                            input_ids=gen_input_ids,
-                            attention_mask=gen_attention_mask,
-                            dna_tokenized=example_dna_data,
-                            batch_idx_map=example_batch_map,
-                            max_new_tokens=800,
-                            temperature=0.6,
-                            top_p=0.95,
-                            top_k=20,
-                            do_sample=True,
-                        )
-
-                    # Decode and display
-                    user_input = self.tokenizer.decode(gen_input_ids[0], skip_special_tokens=False).strip()
-                    generation = self.tokenizer.decode(generated[0], skip_special_tokens=False).strip()
+                    try:
+                        with torch.no_grad():
+                            generated = self.model.generate(
+                                input_ids=gen_input_ids,
+                                attention_mask=gen_attention_mask,
+                                dna_tokenized=example_dna_data,
+                                batch_idx_map=example_batch_map,
+                                max_new_tokens=800,
+                                temperature=0.6,
+                                top_p=0.95,
+                                top_k=20,
+                                do_sample=True,
+                            )
+                        user_input = self.tokenizer.decode(gen_input_ids[0], skip_special_tokens=False).strip()
+                        generation = self.tokenizer.decode(generated[0], skip_special_tokens=False).strip()
+                    except Exception as e:
+                        print(f"[generate skipped: {e}]")
+                        del gen_input_ids, gen_attention_mask, example_dna_data, example_batch_map
+                        gc.collect()
+                        continue
 
                     # Free memory early
                     del generated, gen_input_ids, gen_attention_mask, example_dna_data, example_batch_map
