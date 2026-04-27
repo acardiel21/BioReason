@@ -9,8 +9,6 @@
 #BSUB -o /sc/arion/work/cardia04/BioReason/logs/vep_dna_qwen_%J.out
 #BSUB -eo /sc/arion/work/cardia04/BioReason/logs/vep_dna_qwen_%J.err
 #BSUB -L /bin/bash
-#BSUB -u andrea.cardiel@icahn.mssm.edu
-#BSUB -N
 
 module load gcc/14.2.0
 module load cuda/13.0.0
@@ -41,22 +39,21 @@ export TOKENIZERS_PARALLELISM=false
 export WANDB_MODE=offline
 export WANDB_PROJECT=bioreason
 
-nvidia-smi
+nvidia-smi                             # Check GPU status
 
-echo "======== Job started on $(hostname) at $(date) ========"
 
-echo "======== Starting VEP Coding (NT-500M + Qwen3-4B): $(date) ========"
+echo "Starting VEP Non-SNV (NT-500M + Qwen3-4B)"
+
+# NT-500M + Qwen3-4B on VEP Non-SNV
 stdbuf -oL -eL python train_dna_qwen.py \
     --cache_dir $CACHE_DIR \
     --wandb_project $WANDB_PROJECT \
-    --wandb_entity andrea-cardiel-icahn \
     --text_model_name Qwen/Qwen3-4B \
     --dna_model_name InstaDeepAI/nucleotide-transformer-v2-500m-multi-species \
     --strategy deepspeed_stage_2 \
-    --max_epochs 3 \
+    --max_epochs 1 \
     --num_gpus 1 \
     --batch_size 2 \
     --model_type dna-llm \
-    --dataset_type variant_effect_coding \
+    --dataset_type variant_effect_non_snv \
     --return_answer_in_batch True
-echo "======== VEP Coding finished (exit code: $?) at $(date) ========"
