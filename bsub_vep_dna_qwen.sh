@@ -59,5 +59,6 @@ stdbuf -oL -eL python train_dna_qwen.py \
     --model_type dna-llm \
     --dataset_type variant_effect_coding \
     --learning_rate 5e-5 \
+    --max_length_dna 2048 \
     --return_answer_in_batch True
 echo "======== VEP Coding finished (exit code: $?) at $(date) ========"

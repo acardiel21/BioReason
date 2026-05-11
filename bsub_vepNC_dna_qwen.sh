@@ -58,4 +58,5 @@ stdbuf -oL -eL python train_dna_qwen.py \
     --batch_size 2 \
     --model_type dna-llm \
     --dataset_type variant_effect_non_snv \
+    --max_length_dna 2048 \
     --return_answer_in_batch True

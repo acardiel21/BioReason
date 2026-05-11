@@ -60,5 +60,6 @@ stdbuf -oL -eL python train_dna_qwen.py \
     --batch_size 1 \
     --model_type dna-llm \
     --dataset_type kegg \
+    --max_length_dna 2048 \
     --merge_val_test_set True \
     --return_answer_in_batch True
