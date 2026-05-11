@@ -1,13 +1,13 @@
 #!/bin/bash
-#BSUB -J bioreason_vep_lr5e5
+#BSUB -J bioreason_vep_lr3e4
 #BSUB -W 12:00
 #BSUB -P acc_genome_foundation
 #BSUB -q gpu
 #BSUB -n 8
 #BSUB -R "rusage[mem=16000] span[hosts=1]"
 #BSUB -gpu "num=1:mode=exclusive_process:mps=no:gmem=48G"
-#BSUB -o /sc/arion/work/cardia04/BioReason/logs/vep_dna_qwen_%J.out
-#BSUB -eo /sc/arion/work/cardia04/BioReason/logs/vep_dna_qwen_%J.err
+#BSUB -o /sc/arion/work/cardia04/BioReason/logs/vep_lr3e4_%J.out
+#BSUB -eo /sc/arion/work/cardia04/BioReason/logs/vep_lr3e4_%J.err
 #BSUB -L /bin/bash
 #BSUB -u andrea.cardiel@icahn.mssm.edu
 #BSUB -N
@@ -22,10 +22,9 @@ echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
 echo "which python: $(which python)"
 
 ## Configuration Variables
-# Change these to match your setup
-CONDA_ENV=bioreview                     # conda environment name
-CACHE_DIR=/sc/arion/work/cardia04/.cache/huggingface   # HF cache directory
-WANDB_PROJECT=bioreason             # W&B project name
+CONDA_ENV=bioreview
+CACHE_DIR=/sc/arion/work/cardia04/.cache/huggingface
+WANDB_PROJECT=bioreason
 
 ## Setup Environment
 source /hpc/users/cardia04/miniconda3/etc/profile.d/conda.sh
@@ -45,7 +44,7 @@ nvidia-smi
 
 echo "======== Job started on $(hostname) at $(date) ========"
 
-echo "======== Starting VEP Coding (NT-500M + Qwen3-4B): $(date) ========"
+echo "======== Starting VEP Coding lr=3e-4 (NT-500M + Qwen3-4B): $(date) ========"
 stdbuf -oL -eL python train_dna_qwen.py \
     --cache_dir $CACHE_DIR \
     --wandb_project $WANDB_PROJECT \
@@ -58,6 +57,6 @@ stdbuf -oL -eL python train_dna_qwen.py \
     --batch_size 2 \
     --model_type dna-llm \
     --dataset_type variant_effect_coding \
-    --learning_rate 5e-5 \
+    --learning_rate 3e-4 \
     --return_answer_in_batch True
-echo "======== VEP Coding finished (exit code: $?) at $(date) ========"
+echo "======== VEP Coding lr=3e-4 finished (exit code: $?) at $(date) ========"
