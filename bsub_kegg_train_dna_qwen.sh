@@ -9,9 +9,11 @@
 #BSUB -o /sc/arion/work/cardia04/BioReason/logs/train_dna_qwen_%J.out
 #BSUB -eo /sc/arion/work/cardia04/BioReason/logs/train_dna_qwen_%J.err
 #BSUB -L /bin/bash
+#BSUB -u andrea.cardiel@icahn.mssm.edu
+#BSUB -N
 
 module load gcc/14.2.0
-module load cuda/12.9.1
+module load cuda/12.8.0
 
 ## Environment Setup
 echo "CUDA_HOME: $CUDA_HOME"

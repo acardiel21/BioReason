@@ -11,7 +11,7 @@
 #BSUB -L /bin/bash
 
 module load gcc/14.2.0
-module load cuda/12.9.1
+module load cuda/12.8.0
 
 ## Environment Setup
 echo "CUDA_HOME: $CUDA_HOME"
